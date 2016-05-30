@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<nativeAndroidApp id="org_premiumapp_androidapp" platformVersion="7.1.0.00.20160513-1006" version="1.0" xmlns="http://www.worklight.com/native-android-descriptor">
+    <displayName>AndroidApp</displayName>
+    <description>AndroidApp</description>
+    <packageName>org.premiumapp.androidapp</packageName>
+    <publicSigningKey />
+    <accessTokenExpiration>3600</accessTokenExpiration>
+    <userIdentityRealms />
+    <licenseAppType>APPLICATION</licenseAppType>
+    <targetCategory>UNDEFINED</targetCategory>
+</nativeAndroidApp>
