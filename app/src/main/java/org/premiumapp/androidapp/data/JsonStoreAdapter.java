@@ -1,12 +1,15 @@
 package org.premiumapp.androidapp.data;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.jsonstore.api.JSONStore;
 import com.jsonstore.api.JSONStoreAddOptions;
 import com.jsonstore.api.JSONStoreCollection;
 import com.jsonstore.database.SearchFieldType;
+import com.jsonstore.exceptions.JSONStoreDatabaseClosedException;
 import com.jsonstore.exceptions.JSONStoreException;
+import com.jsonstore.exceptions.JSONStoreFindException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,6 +65,25 @@ public class JsonStoreAdapter {
         } catch (JSONException ex) {
 
             ex.printStackTrace();
+        }
+    }
+
+    public void printData() {
+
+        JSONStoreCollection people = JSONStore.getInstance(ctx).getCollectionByName(COLL_PEOPLE);
+
+        try {
+            List<JSONObject> allDocuments = people.findAllDocuments();
+
+            for (JSONObject o : allDocuments) {
+
+                Log.d("my", o.toString());
+            }
+
+        } catch (JSONStoreFindException e) {
+            e.printStackTrace();
+        } catch (JSONStoreDatabaseClosedException e) {
+            e.printStackTrace();
         }
     }
 

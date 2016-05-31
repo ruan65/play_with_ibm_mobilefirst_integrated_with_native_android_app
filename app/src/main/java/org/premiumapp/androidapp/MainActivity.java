@@ -11,12 +11,15 @@ import com.worklight.wlclient.api.WLResourceRequest;
 import com.worklight.wlclient.api.WLResponse;
 import com.worklight.wlclient.api.WLResponseListener;
 
+import org.premiumapp.androidapp.data.JsonStoreAdapter;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
 public class MainActivity extends AppCompatActivity {
 
-    WLClient client;
+    private WLClient client;
+    private JsonStoreAdapter storeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("mfp", "Faillllllllllllllllllllllllllllllll........................");
             }
         });
+
+        storeAdapter = new JsonStoreAdapter(this);
     }
 
     private void callAdapter() {
@@ -65,5 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void callAdapter(View view) {
         callAdapter();
+    }
+
+    public void writeCollection(View view) {
+        storeAdapter.initJsonStore();
+    }
+
+    public void readCollection(View view) {
+        storeAdapter.printData();
     }
 }
