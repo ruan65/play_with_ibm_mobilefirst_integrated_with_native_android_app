@@ -12,8 +12,10 @@ import com.jsonstore.exceptions.JSONStoreException;
 import com.jsonstore.exceptions.JSONStoreFindException;
 import com.jsonstore.exceptions.JSONStoreInvalidSchemaException;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.premiumapp.androidapp.MainActivity;
 import org.premiumapp.androidapp.R;
 import org.premiumapp.androidapp.data.model.Persona;
 
@@ -69,10 +71,15 @@ public class JsonStoreAdapter {
         try {
             List<JSONObject> allDocuments = people.findAllDocuments();
 
+            StringBuilder sb = new StringBuilder();
+
             for (JSONObject o : allDocuments) {
 
                 Log.d("my", o.toString());
+                sb.append(o.toString()).append("\n");
             }
+
+            EventBus.getDefault().post(sb.toString());
 
         } catch (JSONStoreFindException e) {
             e.printStackTrace();
@@ -82,4 +89,13 @@ public class JsonStoreAdapter {
     }
 
 
+    public void clearPeopleCollection() {
+
+        try {
+            people.clearCollection();
+            EventBus.getDefault().post("");
+        } catch (JSONStoreDatabaseClosedException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.worklight.wlclient.api.WLClient;
 import com.worklight.wlclient.api.WLFailResponse;
@@ -12,11 +13,16 @@ import com.worklight.wlclient.api.WLResourceRequest;
 import com.worklight.wlclient.api.WLResponse;
 import com.worklight.wlclient.api.WLResponseListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.premiumapp.androidapp.data.JsonStoreAdapter;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,10 +30,13 @@ public class MainActivity extends AppCompatActivity {
     private WLClient client;
     private JsonStoreAdapter storeAdapter;
 
+    @Bind(R.id.info) TextView tvInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         client = WLClient.createInstance(this);
 
@@ -47,6 +56,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         storeAdapter = ThisApp.get(this).getAdapter();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     private void callAdapter() {
@@ -83,5 +104,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void readCollection(View view) {
         storeAdapter.printData();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void fillInfo(String info) {
+        tvInfo.setText(info);
+    }
+
+    public void clearCollection(View view) {
+
+        storeAdapter.clearPeopleCollection();
+
     }
 }

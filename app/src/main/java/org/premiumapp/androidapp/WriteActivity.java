@@ -32,6 +32,10 @@ public class WriteActivity extends AppCompatActivity {
 
         adapter.savePerson(new Persona(etName.getText().toString(),
                 Integer.valueOf(etAge.getText().toString())));
+
+        etName.setText("");
+        etAge.setText("");
+        onBackPressed();
     }
 
 
