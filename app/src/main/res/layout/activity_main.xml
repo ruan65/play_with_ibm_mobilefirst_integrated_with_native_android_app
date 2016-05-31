@@ -25,9 +25,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Call Adapter"
+        android:text="Write"
         android:id="@+id/btn_write_collection"
         android:onClick="writeCollection"
+        android:layout_below="@+id/btn_call_adapter"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         />
@@ -36,7 +37,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Call Adapter"
+        android:text="Read"
+        android:layout_below="@+id/btn_write_collection"
         android:id="@+id/btn_read_collection"
         android:onClick="readCollection"
         android:layout_alignParentLeft="true"

@@ -10,10 +10,12 @@ import com.jsonstore.database.SearchFieldType;
 import com.jsonstore.exceptions.JSONStoreDatabaseClosedException;
 import com.jsonstore.exceptions.JSONStoreException;
 import com.jsonstore.exceptions.JSONStoreFindException;
+import com.jsonstore.exceptions.JSONStoreInvalidSchemaException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.premiumapp.androidapp.R;
+import org.premiumapp.androidapp.data.model.Persona;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,51 +28,43 @@ public class JsonStoreAdapter {
     public final String AGE = "age";
 
     private Context ctx;
+    private JSONStoreCollection people;
+    private List<JSONStoreCollection> collections = new LinkedList<>();
+    private JSONStoreAddOptions addOpt = new JSONStoreAddOptions();
 
     public JsonStoreAdapter(Context ctx) {
         this.ctx = ctx;
-        initJsonStore();
+        initPeopleCollection(ctx);
     }
 
-    public void initJsonStore() {
-
-        String[] names = ctx.getResources().getStringArray(R.array.names);
+    private void initPeopleCollection(Context ctx) {
         try {
+            people = new JSONStoreCollection(COLL_PEOPLE);
+        } catch (JSONStoreInvalidSchemaException e) {
+            e.printStackTrace();
+        }
+        people.setSearchField(NAME, SearchFieldType.STRING);
+        people.setSearchField(AGE, SearchFieldType.INTEGER);
+        collections.add(people);
+    }
 
-            List<JSONStoreCollection> collections = new LinkedList<>();
-            JSONStoreCollection peopleCollection = new JSONStoreCollection(COLL_PEOPLE);
+    public void savePerson(Persona p) {
 
-
-            peopleCollection.setSearchField(NAME, SearchFieldType.STRING);
-            peopleCollection.setSearchField(AGE, SearchFieldType.INTEGER);
-
-            collections.add(peopleCollection);
-
+        try {
             JSONStore.getInstance(ctx).openCollections(collections);
-
-            JSONStoreAddOptions addOpt = new JSONStoreAddOptions();
-
             addOpt.setMarkDirty(true);
 
-            Random r = new Random();
+            people.addData(new JSONObject(String.format(
+                    "{%s: '%s', %s: %d}", NAME, p.name, AGE, p.age
+            )));
 
-            for (String name : names) {
-                peopleCollection.addData(new JSONObject(String.format("{%s: '%s', %s: %d}", NAME, AGE, name, r.nextInt(91) + 10)), addOpt);
-            }
-
-        } catch (JSONStoreException ex) {
-
-            ex.printStackTrace();
-
-        } catch (JSONException ex) {
-
+        } catch (JSONStoreException | JSONException ex) {
             ex.printStackTrace();
         }
     }
 
     public void printData() {
 
-        JSONStoreCollection people = JSONStore.getInstance(ctx).getCollectionByName(COLL_PEOPLE);
 
         try {
             List<JSONObject> allDocuments = people.findAllDocuments();

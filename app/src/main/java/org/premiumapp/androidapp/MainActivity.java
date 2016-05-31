@@ -1,5 +1,6 @@
 package org.premiumapp.androidapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,8 @@ import org.premiumapp.androidapp.data.JsonStoreAdapter;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        storeAdapter = new JsonStoreAdapter(this);
+        storeAdapter = ThisApp.get(this).getAdapter();
     }
 
     private void callAdapter() {
@@ -73,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void writeCollection(View view) {
-        storeAdapter.initJsonStore();
+        Timber.d("writeCollection..................");
+
+        startActivity(new Intent(this, WriteActivity.class));
     }
 
     public void readCollection(View view) {

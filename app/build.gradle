@@ -14,6 +14,10 @@ android {
         pickFirst 'META-INF/NOTICE'
     }
 
+    dexOptions {
+        jumboMode true
+    }
+
     defaultConfig {
         applicationId "org.premiumapp.androidapp"
         minSdkVersion 16
@@ -29,10 +33,20 @@ android {
     }
 }
 
+final SUPPORT_LIB = '23.4.0'
+final GOOGLE_PLAY = "8.4.0"
+final RETROFIT_VERSION = '2.0.0'
+
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile "com.android.support:appcompat-v7:${SUPPORT_LIB}"
+    compile "com.android.support:design:${SUPPORT_LIB}"
+
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.jakewharton.timber:timber:4.1.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
 
     compile group: 'com.ibm.mobile.foundation',
             name: 'ibmmobilefirstplatformfoundation',
