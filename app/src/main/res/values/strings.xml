@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">AndroidApp</string>
+
+    <string-array name="names">
+        <item>Helen</item>
+        <item>Boris</item>
+        <item>Andrew</item>
+        <item>Victor</item>
+        <item>Gala</item>
+        <item>Gaby</item>
+        <item>Cheeta</item>
+        <item>Michale</item>
+        <item>John</item>
+        <item>Otto</item>
+        <item>Alex</item>
+    </string-array>
 </resources>
