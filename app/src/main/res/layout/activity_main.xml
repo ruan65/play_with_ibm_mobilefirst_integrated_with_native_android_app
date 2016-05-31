@@ -11,9 +11,13 @@
     tools:context="org.premiumapp.androidapp.MainActivity"
     >
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Call Adapter"
+        android:id="@+id/btn_call_adapter"
+        android:onClick="callAdapter"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         />
 </RelativeLayout>

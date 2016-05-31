@@ -39,4 +39,6 @@ dependencies {
             version: '7.1.0.0',
             ext: 'aar',
             transitive: true
+
+    compile 'com.ibm.mobilefirstplatform.clientsdk.android:jsonstore:+'
 }

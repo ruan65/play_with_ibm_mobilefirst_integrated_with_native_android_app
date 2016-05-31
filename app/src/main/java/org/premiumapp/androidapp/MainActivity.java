@@ -3,6 +3,7 @@ package org.premiumapp.androidapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.worklight.wlclient.api.WLClient;
 import com.worklight.wlclient.api.WLFailResponse;
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("mfp", "Successssssssssssssssssssssssss.....................");
 
-                callAdapter();
             }
 
             @Override
@@ -61,5 +61,9 @@ public class MainActivity extends AppCompatActivity {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
+    }
+
+    public void callAdapter(View view) {
+        callAdapter();
     }
 }
